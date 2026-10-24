@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeautyGlow — Магазин косметики</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e8f5d5;
+  color: #34452e;
+}
+header {
+  background: #d5e9bd;
+  padding: 22px 15px;
+  text-align: center;
+}
+header h1 {
+  color: #df6598;
+  font-size: 34px;
+  margin: 0 0 10px;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 15px;
+  background: #df6598;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+.hero {
+  text-align: center;
+  padding: 35px 15px;
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 15px;
+  padding: 15px;
+  max-width: 900px;
+  margin: auto;
+}
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px 12px;
+  text-align: center;
+  box-shadow: 0 3px 12px #00000010;
+}
+.product-image { font-size: 48px; }
+.price {
+  color: #d94e89;
+  font-size: 20px;
+  font-weight: bold;
+}
+footer {
+  text-align: center;
+  padding: 25px 12px;
+  background: #d5e9bd;
+  margin-top: 25px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BeautyGlow 🌸</h1>
+  <p id="subtitle">Твоя красота — наша забота!</p>
+  <nav>
+    <button onclick="setLang('ru')">РУС</button>
+    <button onclick="setLang('uz')">UZ</button>
+    <button onclick="setLang('en')">ENG</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2 id="welcome">Добро пожаловать в BeautyGlow!</h2>
+  <p id="description">Открой мир красоты вместе с нами!</p>
+</section>
+
+<main class="products" id="products"></main>
+
+<footer>
+  <p>© 2026 BeautyGlow</p>
+  <p id="contact">Заказы через WhatsApp или Telegram</p>
+</footer>
+
+<script>
+const translations = {
+  ru: {
+    subtitle: "Твоя красота — наша забота!",
+    welcome: "Добро пожаловать в BeautyGlow!",
+    description: "Открой мир красоты вместе с нами!",
+    contact: "Заказы через WhatsApp или Telegram",
+    order: "Заказать",
+    products: [
+      ["Тональный крем", "✨"],
+      ["Помада для губ", "💄"],
+      ["Крем для лица", "🌷"],
+      ["Тушь для ресниц", "👁️"],
+      ["Парфюм", "🌸"],
+      ["Уход за кожей", "🧴"]
+    ]
+  },
+  uz: {
+    subtitle: "Sizning go‘zalligingiz — bizning g‘amxo‘rligimiz!",
+    welcome: "BeautyGlow do‘koniga xush kelibsiz!",
+    description: "Go‘zallik olamini biz bilan kashf eting!",
+    contact: "Buyurtma berish uchun biz bilan bog‘laning",
+    order: "Buyurtma berish",
+    products: [
+      ["Tonal krem", "✨"],
+      ["Lab bo‘yog‘i", "💄"],
+      ["Yuz kremi", "🌷"],
+      ["Kiprik tush", "👁️"],
+      ["Atir", "🌸"],
+      ["Teri parvarishi", "🧴"]
+    ]
+  },
+  en: {
+    subtitle: "Your beauty is our passion!",
+    welcome: "Welcome to BeautyGlow!",
+    description: "Discover the world of beauty with us!",
+    contact: "Contact us to place an order",
+    order: "Order",
+    products: [
+      ["Foundation", "✨"],
+      ["Lipstick", "💄"],
+      ["Face cream", "🌷"],
+      ["Mascara", "👁️"],
+      ["Perfume", "🌸"],
+      ["Skincare", "🧴"]
+    ]
+  }
+};
+
+function renderProducts(lang) {
+  const area = document.getElementById("products");
+  area.innerHTML = "";
+
+  translations[lang].products.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "card";
+    card.innerHTML =
+      '<div class="product-image">' + item[1] + '</div>' +
+      '<h3>' + item[0] + '</h3>' +
+      '<p class="price">Цена уточняется</p>' +
+      '<button class="order">' +
+      translations[lang].order + '</button>';
+
+    card.querySelector("button").onclick = () => {
+      const message = encodeURIComponent(
+        "Здравствуйте! Хочу заказать: " + item[0]
+      );
+      window.open(
+        "https://wa.me/?text=" + message,
+        "_blank"
+      );
+    };
+
+    area.appendChild(card);
+  });
+}
+
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.getElementById("subtitle").textContent =
+    translations[lang].subtitle;
+  document.getElementById("welcome").textContent =
+    translations[lang].welcome;
+  document.getElementById("description").textContent =
+    translations[lang].description;
+  document.getElementById("contact").textContent =
+    translations[lang].contact;
+  renderProducts(lang);
+}
+
+setLang("ru");
+</script>
+
+</body>
+</html>
